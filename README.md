@@ -2,6 +2,8 @@
 
 A machine learning-powered system for detecting performance bugs in code commits using multiple ML models and the SZZ (Sliwerski-Zimmermann-Zeller) algorithm.
 
+Analyze code commits and predict performance bugs using multiple machine learning models. Train custom models on your repositories or use pre-trained systems to identify potential issues before deployment.
+
 ## 🚀 Features
 
 - **Multiple ML Models**: 10+ machine learning algorithms (Random Forest, XGBoost, LightGBM, CatBoost, Deep Learning, etc.)
@@ -21,8 +23,8 @@ A machine learning-powered system for detecting performance bugs in code commits
 
 1. **Clone the repository:**
    ```bash
-   git clone <your-repo-url>
-   cd Final_version_Varshith_11pm-20.11
+   git clone https://github.com/varshith016/Performance_Bug_Prediction.git
+   cd Performance_Bug_Prediction
    ```
 
 2. **Install dependencies:**
@@ -126,4 +128,3 @@ See `JIRA_INTEGRATION_GUIDE.md` for detailed instructions.
 ---
 
 **Note**: Trained models and cloned repositories are excluded from git due to size. Team members can train their own models or use the existing dataset.
-
