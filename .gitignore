@@ -1,0 +1,62 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual Environment
+.venv/
+venv/
+ENV/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Project Specific
+# Trained models (too large for git, teammates can train their own)
+truly_clean_models/*.pkl
+truly_clean_models/*.csv
+
+# Cloned repositories (too large, can be re-cloned)
+cloned_repos/
+
+# Training artifacts
+catboost_info/
+*.tsv
+*.json
+*.tfevents
+
+# Dataset (if too large, consider Git LFS or exclude)
+# all_projects_combined.csv  # Uncomment if file is too large
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.bak
+*.cache
+
+# Jira API tokens (if stored in config files)
+*.token
+*.key
+
+# Windows
+*.lnk
+

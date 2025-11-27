@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Performance Bug Predictor - ML-Powered Code Analysis</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <svg class="brand-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span class="brand-text">Performance Bug Predictor</span>
+            </div>
+            <div class="nav-menu">
+                <a href="#train" class="nav-link active">Train Models</a>
+                <a href="#predict" class="nav-link">Predict Bugs</a>
+                <a href="#results-section" class="nav-link">Results</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">Performance Bug Prediction Platform</h1>
+                <p class="hero-subtitle">Analyze code commits and predict performance bugs using multiple machine learning models. Train custom models on your repositories or use pre-trained systems to identify potential issues before deployment.</p>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">10</div>
+                        <div class="stat-label">ML Models</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">Custom</div>
+                        <div class="stat-label">Model Training</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">Any Repo</div>
+                        <div class="stat-label">Train on Your Code</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="floating-card card-1">
+                    <div class="card-icon">📊</div>
+                    <div class="card-text">Probability Scores</div>
+                </div>
+                <div class="floating-card card-2">
+                    <div class="card-icon">✓</div>
+                    <div class="card-text">Ensemble Learning</div>
+                </div>
+                <div class="floating-card card-3">
+                    <div class="card-icon">🤖</div>
+                    <div class="card-text">ML Prediction</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Training Section -->
+            <section id="train" class="section training-section">
+                <div class="section-header">
+                    <div class="section-icon">🚀</div>
+                    <div>
+                        <h2 class="section-title">Train Models</h2>
+                        <p class="section-description">Train machine learning models on your codebase to identify performance bugs. Use a Git repository or existing dataset.</p>
+                    </div>
+                </div>
+                
+                <div class="card main-card">
+                    <form id="training-form" class="training-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="repo-url" class="form-label">
+                                    <span class="label-icon">🔗</span>
+                                    Git Repository URL <span class="optional">(optional)</span>
+                                </label>
+                                <input type="url" id="repo-url" name="repo_url" 
+                                       placeholder="https://github.com/user/repo.git"
+                                       class="form-input">
+                                <small class="form-hint">Leave empty to use existing dataset</small>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="model-type" class="form-label">
+                                    <span class="label-icon">🎯</span>
+                                    Model Type
+                                </label>
+                                <select id="model-type" name="model_type" class="form-input">
+                                    <option value="all">All Models (Recommended)</option>
+                                    {% for option in model_options %}
+                                    <option value="{{ option.id }}">{{ option.label }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Advanced Configuration (Collapsible) -->
+                        <div class="advanced-config">
+                            <button type="button" class="btn-toggle-advanced" onclick="toggleAdvancedConfig()">
+                                <span id="advanced-toggle-icon">▶</span> 
+                                <span>Advanced Configuration</span>
+                            </button>
+                            <div id="advanced-config-content" class="advanced-config-content" style="display: none;">
+                                <!-- Time/Commit Range -->
+                                <div class="form-group">
+                                    <label for="time-range" class="form-label">Time/Commit Range (optional)</label>
+                                    <div class="range-inputs">
+                                        <div class="form-group-inline">
+                                            <label for="start-date">Start Date:</label>
+                                            <input type="date" id="start-date" name="start_date" class="form-input">
+                                        </div>
+                                        <div class="form-group-inline">
+                                            <label for="end-date">End Date:</label>
+                                            <input type="date" id="end-date" name="end_date" class="form-input">
+                                        </div>
+                                    </div>
+                                    <div style="margin-top: 16px;">
+                                        <label for="max-commits" class="form-label">Max Commits to Display (default: 10):</label>
+                                        <input type="number" id="max-commits" name="max_commits" 
+                                               placeholder="10" min="1" max="1000" value="10" class="form-input">
+                                        <small class="form-hint">Number of recent commits to fetch and display</small>
+                                    </div>
+                                    <div style="margin-top: 16px;">
+                                        <label for="commit-hash" class="form-label">Or Specific Commit Hash:</label>
+                                        <input type="text" id="commit-hash" name="commit_hash" 
+                                               placeholder="e.g., abc123def456" class="form-input">
+                                    </div>
+                                    <small class="form-hint">Leave empty to analyze all commits</small>
+                                </div>
+
+                                <!-- Keyword Refinement -->
+                                <div class="form-group">
+                                    <label for="bug-keywords" class="form-label">Performance Bug Keywords (comma-separated)</label>
+                                    <input type="text" id="bug-keywords" name="bug_keywords" 
+                                           value="bug,fix,error,defect,issue,patch,performance,slow,optimize,speed,latency"
+                                           class="form-input"
+                                           placeholder="bug,fix,error,defect,issue,patch">
+                                    <small class="form-hint">Customize keywords used to identify bug-fix commits in SZZ analysis</small>
+                                </div>
+
+                                <!-- Granularity Setting -->
+                                <div class="form-group">
+                                    <label class="form-label">Analysis Granularity</label>
+                                    <fieldset class="radio-group">
+                                        <label class="radio">
+                                            <input type="radio" name="granularity" value="file" checked>
+                                            <span>File-Level</span>
+                                        </label>
+                                        <label class="radio">
+                                            <input type="radio" name="granularity" value="function">
+                                            <span>Function/Method-Level</span>
+                                        </label>
+                                    </fieldset>
+                                    <small class="form-hint">Select file-level or function-level analysis granularity</small>
+                                </div>
+
+                                <!-- Feature Selection -->
+                                <div class="form-group">
+                                    <label class="form-label">Feature Selection</label>
+                                    <div class="feature-checkboxes">
+                                        <label class="checkbox">
+                                            <input type="checkbox" name="features" value="added_lines" checked>
+                                            <span>Added Lines</span>
+                                        </label>
+                                        <label class="checkbox">
+                                            <input type="checkbox" name="features" value="deleted_lines" checked>
+                                            <span>Deleted Lines</span>
+                                        </label>
+                                        <label class="checkbox">
+                                            <input type="checkbox" name="features" value="nloc" checked>
+                                            <span>NLOC</span>
+                                        </label>
+                                        <label class="checkbox">
+                                            <input type="checkbox" name="features" value="complexity" checked>
+                                            <span>Complexity</span>
+                                        </label>
+                                        <label class="checkbox">
+                                            <input type="checkbox" name="features" value="token_count" checked>
+                                            <span>Token Count</span>
+                                        </label>
+                                        <label class="checkbox">
+                                            <input type="checkbox" name="features" value="commit_msg_length" checked>
+                                            <span>Commit Message Length</span>
+                                        </label>
+                                        <label class="checkbox">
+                                            <input type="checkbox" name="features" value="churn_30d" checked>
+                                            <span>Churn (30d)</span>
+                                        </label>
+                                        <label class="checkbox">
+                                            <input type="checkbox" name="features" value="developer_count_90d" checked>
+                                            <span>Developer Count (90d)</span>
+                                        </label>
+                                        <label class="checkbox">
+                                            <input type="checkbox" name="features" value="commit_frequency_30d" checked>
+                                            <span>Commit Frequency (30d)</span>
+                                        </label>
+                                        <label class="checkbox">
+                                            <input type="checkbox" name="features" value="file_age_days" checked>
+                                            <span>File Age (days)</span>
+                                        </label>
+                                    </div>
+                                    <small class="form-hint">Toggle features to include/exclude from model training</small>
+                                </div>
+
+                                <!-- Jira Integration Configuration -->
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        <span class="label-icon">🔗</span>
+                                        Jira Integration <span class="optional">(optional)</span>
+                                    </label>
+                                    <div class="jira-config">
+                                        <input type="text" id="jira-url" name="jira_url" 
+                                               placeholder="https://yourcompany.atlassian.net" 
+                                               class="form-input">
+                                        <small class="form-hint">Jira instance URL</small>
+                                        
+                                        <input type="text" id="jira-username" name="jira_username" 
+                                               placeholder="your.email@company.com" 
+                                               class="form-input" style="margin-top: 0.5rem;">
+                                        <small class="form-hint">Jira username/email</small>
+                                        
+                                        <input type="password" id="jira-api-token" name="jira_api_token" 
+                                               placeholder="Jira API Token" 
+                                               class="form-input" style="margin-top: 0.5rem;">
+                                        <small class="form-hint">
+                                            <a href="https://id.atlassian.com/manage-profile/security/api-tokens" target="_blank">
+                                                Get API token from Atlassian
+                                            </a>
+                                        </small>
+                                        
+                                        <label class="checkbox" style="margin-top: 0.75rem;">
+                                            <input type="checkbox" id="enable-jira" name="enable_jira" value="true">
+                                            <span>Enable Jira integration for enhanced bug detection</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-large" id="train-btn">
+                            <span class="btn-icon">▶</span>
+                            Start Analysis & Training
+                        </button>
+                    </form>
+
+                    <!-- Training Progress Dashboard -->
+                    <div id="training-progress" class="training-progress" style="display: none;">
+                        <div class="progress-header">
+                            <h3 class="progress-title">Training Progress</h3>
+                            <div class="progress-header-right">
+                                <div class="progress-text" id="progress-text">0%</div>
+                                <button type="button" id="stop-training-btn" class="btn btn-danger btn-small" style="display: none;" onclick="stopTraining()">
+                                    <span class="btn-icon">⏹</span>
+                                    Stop Training
+                                </button>
+                            </div>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar-fill" id="progress-bar-fill"></div>
+                        </div>
+                        <div class="progress-steps">
+                            <div class="step" id="step-szz">
+                                <div class="step-icon">⏳</div>
+                                <span class="step-label">SZZ Analysis</span>
+                            </div>
+                            <div class="step" id="step-features">
+                                <div class="step-icon">⏳</div>
+                                <span class="step-label">Feature Extraction</span>
+                            </div>
+                            <div class="step" id="step-training">
+                                <div class="step-icon">⏳</div>
+                                <span class="step-label">Model Training</span>
+                            </div>
+                            <div class="step" id="step-complete">
+                                <div class="step-icon">⏳</div>
+                                <span class="step-label">Complete</span>
+                            </div>
+                        </div>
+                        <div class="progress-message" id="progress-message">Initializing...</div>
+                        
+                        <!-- Commits Display -->
+                        <div id="commits-container" class="commits-container" style="display: none;">
+                            <!-- Commits will be displayed here after cloning -->
+                        </div>
+                        
+                        <!-- Log Viewer -->
+                        <div class="log-viewer-container">
+                            <div class="log-viewer-header">
+                                <h4>Pipeline Logs</h4>
+                                <button type="button" class="btn-small" onclick="clearLogs()">Clear</button>
+                            </div>
+                            <div id="log-viewer" class="log-viewer">
+                                <div class="log-entry info">System initialized. Ready to start training.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Training Results -->
+                    <div id="training-results" class="training-results" style="display: none;">
+                        <h3 class="results-title">Training Results</h3>
+                        <div class="metrics-grid" id="metrics-grid"></div>
+                        
+                        <!-- Visualizations for Training Results -->
+                        <div id="training-visualizations" style="margin-top: 32px;"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Prediction Section -->
+            <section id="predict" class="section prediction-section">
+                <div class="section-header">
+                    <div class="section-icon">🔮</div>
+                    <div>
+                        <h2 class="section-title">Predict Bugs</h2>
+                        <p class="section-description">Upload your code files and get instant predictions about potential performance bugs using trained ML models.</p>
+                    </div>
+                </div>
+                
+                <div class="card main-card">
+                    <form id="predict-form" class="prediction-form">
+                        <div class="form-group">
+                            <label for="code-file" class="form-label">
+                                <span class="label-icon">📄</span>
+                                Upload Code File
+                            </label>
+                            <div class="file-input">
+                                <label for="code-file" class="file-label">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                        <polyline points="17 8 12 3 7 8"></polyline>
+                                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                                    </svg>
+                                    Choose File
+                                </label>
+                                <input id="code-file" type="file" name="code_file" accept=".py,.java,.js,.cpp,.c,.cs,.rb,.go,.txt">
+                                <p id="selected-file" class="selected-file">No file selected</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="base-file" class="form-label">
+                                <span class="label-icon">📂</span>
+                                Parent/Base File <span class="optional">(optional)</span>
+                            </label>
+                            <div class="file-input secondary">
+                                <label for="base-file" class="file-label ghost">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                        <polyline points="17 8 12 3 7 8"></polyline>
+                                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                                    </svg>
+                                    Choose Parent File
+                                </label>
+                                <input id="base-file" type="file" name="base_code" accept=".py,.java,.js,.cpp,.c,.cs,.rb,.go,.txt">
+                                <p id="selected-base-file" class="selected-file">No parent file selected</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="commit-message" class="form-label">
+                                <span class="label-icon">💬</span>
+                                Commit Message <span class="optional">(optional)</span>
+                            </label>
+                            <textarea id="commit-message" name="commit_message" rows="4" 
+                                      placeholder="Describe the change..." class="form-input"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">
+                                <span class="label-icon">🤖</span>
+                                Select Model
+                            </label>
+                            <fieldset class="model-select-grid">
+                                <label class="radio">
+                                    <input type="radio" name="model" value="all" checked>
+                                    <span>All Models</span>
+                                </label>
+                                {% for option in model_options %}
+                                <label class="radio">
+                                    <input type="radio" name="model" value="{{ option.id }}">
+                                    <span>{{ option.label }}</span>
+                                </label>
+                                {% endfor %}
+                            </fieldset>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">
+                                <span class="label-icon">⚙️</span>
+                                Analysis Options
+                            </label>
+                            <div class="checkbox-group">
+                                <label class="checkbox">
+                                    <input type="checkbox" id="function-level-checkbox" name="function_level" value="true">
+                                    <span>Function-Level Analysis</span>
+                                </label>
+                                <small class="form-hint">Analyze code at function/method level instead of file level</small>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-secondary btn-large">
+                            <span class="btn-icon">🔍</span>
+                            Predict Performance Bugs
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Prediction Results -->
+            <section id="results-section" class="section results-section">
+                <div id="results" class="results"></div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Performance Bug Predictor</h4>
+                    <p>ML-powered code analysis tool for detecting performance bugs before they reach production.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Features</h4>
+                    <ul>
+                        <li>10+ ML Models</li>
+                        <li>11 Feature Analysis</li>
+                        <li>Real-time Predictions</li>
+                        <li>Git Integration</li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Models</h4>
+                    <ul>
+                        <li>Random Forest</li>
+                        <li>XGBoost</li>
+                        <li>LightGBM</li>
+                        <li>Deep Learning</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Performance Bug Predictor. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleAdvancedConfig() {
+            const content = document.getElementById('advanced-config-content');
+            const icon = document.getElementById('advanced-toggle-icon');
+            if (content.style.display === 'none') {
+                content.style.display = 'block';
+                icon.textContent = '▼';
+            } else {
+                content.style.display = 'none';
+                icon.textContent = '▶';
+            }
+        }
+
+        function clearLogs() {
+            const logViewer = document.getElementById('log-viewer');
+            if (logViewer) {
+                logViewer.innerHTML = '<div class="log-entry info">Logs cleared.</div>';
+            }
+        }
+
+        // Add log entry function (called from app.js)
+        window.addLogEntry = function(message, type = 'info') {
+            const logViewer = document.getElementById('log-viewer');
+            if (logViewer) {
+                const timestamp = new Date().toLocaleTimeString();
+                const logEntry = document.createElement('div');
+                logEntry.className = `log-entry ${type}`;
+                logEntry.innerHTML = `<span class="log-time">[${timestamp}]</span> ${message}`;
+                logViewer.appendChild(logEntry);
+                logViewer.scrollTop = logViewer.scrollHeight;
+            }
+        };
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                const href = link.getAttribute('href');
+                if (href.startsWith('#')) {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        // Update active state
+                        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                        link.classList.add('active');
+                    }
+                }
+            });
+        });
+    </script>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+    <script src="{{ url_for('static', filename='results-table.js') }}"></script>
+    <script src="{{ url_for('static', filename='visualizations.js') }}"></script>
+</body>
+</html>
