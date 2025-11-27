@@ -119,13 +119,13 @@ See `JIRA_INTEGRATION_GUIDE.md` for detailed instructions.
 
 
 ## Team
-Varshith Bolloju
-Sai Teja Rudroju
-Firas 
-Nivas Varma
-Balaji Ramolla
-Rishitha
-Harika
+Varshith Bolloju,
+Sai Teja Rudroju,
+Firas ,
+Nivas Varma,
+Balaji Ramolla,
+Rishitha,
+Harika.
 ---
 
 **Note**: Trained models and cloned repositories are excluded from git due to size. Team members can train their own models or use the existing dataset.
