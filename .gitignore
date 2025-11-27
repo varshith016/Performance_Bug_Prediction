@@ -28,8 +28,8 @@ Thumbs.db
 desktop.ini
 
 # Project Specific
-# Trained models (too large for git, teammates can train their own)
-truly_clean_models/*.pkl
+# Trained models are now tracked with Git LFS (see .gitattributes)
+# CSV files in models directory are excluded
 truly_clean_models/*.csv
 
 # Cloned repositories (too large, can be re-cloned)
