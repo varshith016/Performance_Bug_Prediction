@@ -4,7 +4,7 @@ A machine learning-powered system for detecting performance bugs in code commits
 
 Analyze code commits and predict performance bugs using multiple machine learning models. Train custom models on your repositories or use pre-trained systems to identify potential issues before deployment.
 
-## 🚀 Features
+## Features
 
 - **Multiple ML Models**: 10+ machine learning algorithms (Random Forest, XGBoost, LightGBM, CatBoost, Deep Learning, etc.)
 - **SZZ Algorithm**: Automatic bug-inducing commit detection
@@ -13,13 +13,13 @@ Analyze code commits and predict performance bugs using multiple machine learnin
 - **Real-Time Training**: Background job processing with progress tracking
 - **Interactive UI**: Modern web interface with card and table views
 
-## 📋 Requirements
+## Requirements
 
 - Python 3.8+
 - Git
 - See `requirements.txt` for Python dependencies
 
-## 🛠️ Installation
+## Installation
 
 1. **Clone the repository:**
    ```bash
@@ -46,7 +46,7 @@ Analyze code commits and predict performance bugs using multiple machine learnin
 4. **Access the web interface:**
    Open your browser and navigate to `http://localhost:5000`
 
-## 📖 Usage
+## Usage
 
 ### Training Models
 
@@ -67,7 +67,7 @@ Analyze code commits and predict performance bugs using multiple machine learnin
 6. Click "Predict Performance Bugs"
 7. View results in card or table view
 
-## 🔧 Configuration
+## Configuration
 
 ### Jira Integration
 
@@ -83,7 +83,7 @@ To enable Jira integration for enhanced bug detection:
 
 See `JIRA_INTEGRATION_GUIDE.md` for detailed instructions.
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 .
@@ -105,26 +105,27 @@ See `JIRA_INTEGRATION_GUIDE.md` for detailed instructions.
 └── README.md             # This file
 ```
 
-## 📚 Documentation
+## Documentation
 
 - `SYSTEM_WORKFLOW_PIPELINE.md` - Complete system workflow and pipeline documentation
 - `JIRA_INTEGRATION_GUIDE.md` - Jira integration guide
 
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
 2. Create a feature branch
 3. Make your changes
 4. Submit a pull request
 
-## 📝 License
 
-[Add your license here]
-
-## 👥 Team
-
-[Add team member names]
-
+## Team
+Varshith Bolloju
+Sai Teja Rudroju
+Firas 
+Nivas Varma
+Balaji Ramolla
+Rishitha
+Harika
 ---
 
 **Note**: Trained models and cloned repositories are excluded from git due to size. Team members can train their own models or use the existing dataset.
